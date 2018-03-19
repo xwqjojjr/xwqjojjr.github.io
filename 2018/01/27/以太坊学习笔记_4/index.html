@@ -1,0 +1,305 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>以太坊学习笔记_4 | 徐文起写字的地方</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="WenqiXu">
+    
+    <meta name="description" content="第四天部署合约的流程1.启动一个以太坊节点 (例如geth或者testrpc)。2.使用solc编译智能合约。 =&amp;gt; 获得二进制代码。3.将编译好的合约部署到网络。（这一步会消耗以太币，还需要使用你的节点的默认地址或者指定地址来给合约签名。） =&amp;gt; 获得合约的区块链地址和ABI（合约接口">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="徐文起写字的地方" title="徐文起写字的地方"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="徐文起写字的地方">徐文起写字的地方</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:xuwenqi.info">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/01/27/以太坊学习笔记_4/" title="以太坊学习笔记_4" itemprop="url">以太坊学习笔记_4</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://xuwenqi.info" title="WenqiXu">WenqiXu</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2018-01-26T16:00:00.000Z" itemprop="datePublished">2018-01-27</time>
+    Updated:<time datetime="2018-03-06T13:09:24.000Z" itemprop="dateModified">2018-03-06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#第四天"><span class="toc-number">1.</span> <span class="toc-text">第四天</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#部署合约的流程"><span class="toc-number">1.1.</span> <span class="toc-text">部署合约的流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单的demo-加法"><span class="toc-number">1.2.</span> <span class="toc-text">简单的demo 加法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装rpctest"><span class="toc-number">1.3.</span> <span class="toc-text">安装rpctest</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#truffle-和-rpstest一起使用"><span class="toc-number">1.4.</span> <span class="toc-text">truffle 和 rpstest一起使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">1.5.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="第四天"><a href="#第四天" class="headerlink" title="第四天"></a>第四天</h1><h2 id="部署合约的流程"><a href="#部署合约的流程" class="headerlink" title="部署合约的流程"></a>部署合约的流程</h2><p>1.启动一个以太坊节点 (例如geth或者testrpc)。<br><br>2.使用solc编译智能合约。 =&gt; 获得二进制代码。<br><br>3.将编译好的合约部署到网络。（这一步会消耗以太币，还需要使用你的节点的默认地址或者指定地址来给合约签名。） =&gt; 获得合约的区块链地址和ABI（合约接口的JSON表示，包括变量，事件和可以调用的方法）。(译注：作者在这里把ABI与合约接口弄混了。ABI是合约接口的二进制表示。)<br><br>4.用web3.js提供的JavaScript API来调用合约。（根据调用的类型有可能会消耗以太币。）<br></p>
+<p>编译合约的方法至少有5种：<br><br><em><br>Sloc<br><br>在Geth或者eth提供的javaScripts控制台使用web3编译<br><br>Solidity realtime complier<br><br>IDE<br><br>以太坊钱包<br>
+</em></p>
+<h2 id="简单的demo-加法"><a href="#简单的demo-加法" class="headerlink" title="简单的demo 加法"></a>简单的demo 加法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.1;  //编译器要求</span><br><span class="line">contract Set &#123;</span><br><span class="line">      address public owner;    //合约创建者</span><br><span class="line">      uint result;</span><br><span class="line">      function Set()&#123;</span><br><span class="line">          owner = msg.sender;</span><br><span class="line">      &#125;</span><br><span class="line">      function assign(uint x, uint y) returns (uint)&#123;</span><br><span class="line">          result = x + y;</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在命令行执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">contract = eth.compile.solidity(source).test</span><br></pre></td></tr></table></figure></p>
+<p><em><br>用eth.getCompilers()来查看编译选项，发现没有显示Solidity，然后会报Error: The method eth_getCompilers does not exist/is not available的错误<br>通过上网查找，geth1.6以后已经移除了这个方法 使用低版本的geth也不可取，改用网页在线编译智能合约<br>
+</em><br><img src="https://github.com/xwqjojjr/MarkdownPhotos/blob/master/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%AD%A6%E4%B9%A0/!%5Bsolidity%5D.png?raw=true" alt="![solidity]"></p>
+<h2 id="安装rpctest"><a href="#安装rpctest" class="headerlink" title="安装rpctest"></a>安装rpctest</h2><p>安装testrpc时候显示node版本不够，总是报ERROR<br><br>解决办法<br><a href="http://blog.csdn.net/wang1144/article/details/78073624" target="_blank" rel="noopener">http://blog.csdn.net/wang1144/article/details/78073624</a></p>
+<p><img src="https://github.com/xwqjojjr/MarkdownPhotos/blob/master/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%AD%A6%E4%B9%A0/!%5Brpctest%5D.png?raw=true" alt="![rpctest]"> <br></p>
+<p>使用testrpc<br></p>
+<p><img src="https://github.com/xwqjojjr/MarkdownPhotos/blob/master/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%AD%A6%E4%B9%A0/!%5Btestrpcuse%5D.png?raw=true" alt="![testrpcuse]"></p>
+<h2 id="truffle-和-rpstest一起使用"><a href="#truffle-和-rpstest一起使用" class="headerlink" title="truffle 和 rpstest一起使用"></a>truffle 和 rpstest一起使用</h2><p><img src="https://github.com/xwqjojjr/MarkdownPhotos/blob/master/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%AD%A6%E4%B9%A0/!%5B%E5%88%9D%E5%A7%8B%E5%8C%96turffle%5D.png?raw=true" alt="![初始化turffle]"></p>
+<p>app/：存放前端javascript文件和stylesheets文件，在开发Dapps时使用；<br><br>contracts/：智能合约文件的存放目录；<br><br>migrations/：存放部署脚本；<br><br>test/：存放智能合约测试文件；<br><br>truffle.js：truffle的主配置文件，在该文件中可以指定以太坊客户端地址和rpc端口，network_id等<br></p>
+<p><em>部署提示没有网络，这是因为没有配置网络</em><br><br><img src="https://github.com/xwqjojjr/MarkdownPhotos/blob/master/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%AD%A6%E4%B9%A0/!%5B%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C%5D.png?raw=true" alt="![配置网络]"> <br></p>
+<p><em>参考</em><br><a href="http://blog.csdn.net/atnice/article/details/79030770" target="_blank" rel="noopener">http://blog.csdn.net/atnice/article/details/79030770</a></p>
+<p><img src="https://github.com/xwqjojjr/MarkdownPhotos/blob/master/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%AD%A6%E4%B9%A0/!%5Btest1%5D.png?raw=true" alt="![test1]"><br><br><img src="https://github.com/xwqjojjr/MarkdownPhotos/blob/master/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%AD%A6%E4%B9%A0/!%5Btest2%5D.png?raw=true" alt="![test2]"> <br></p>
+<p>排除错误后，顺利执行，在testrpc窗口打印信息<br><br><img src="https://github.com/xwqjojjr/MarkdownPhotos/blob/master/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%AD%A6%E4%B9%A0/!%5Btest003%5D.png?raw=true" alt="![test003]"><br></p>
+<p>用truffle和testrpc部署了一个helloworld的demoe<br><br><img src="https://github.com/xwqjojjr/MarkdownPhotos/blob/master/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%AD%A6%E4%B9%A0/!%5Bhelloworldtruffle%5D.png?raw=true" alt="![helloworldtruffle]"><br></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>[1] 明说(04)：如何开发编译部署调用智能合约？<br><br>    <a href="https://v.qq.com/x/page/u0340rj38lm.html" target="_blank" rel="noopener">https://v.qq.com/x/page/u0340rj38lm.html</a><br><br>[2] 解决和说明&gt; eth.getCompilers() Error: The method eth_getCompilers does not exist/is not available<br><br>    <a href="http://blog.csdn.net/xx1710/article/details/77480645" target="_blank" rel="noopener">http://blog.csdn.net/xx1710/article/details/77480645</a><br><br>[3] 在ubuntu16中更新到最新的nodejs<br><br><a href="http://blog.csdn.net/wang1144/article/details/78073624" target="_blank" rel="noopener">http://blog.csdn.net/wang1144/article/details/78073624</a>    <br><br>[4] 智能合同：12种用于商业的使用案例<br><br><a href="http://www.bitecoin.com/online/2016/12/21393.html" target="_blank" rel="noopener">http://www.bitecoin.com/online/2016/12/21393.html</a><br><br>[5]    truffle migrate 报错解决办法<br><br>    <a href="http://blog.csdn.net/atnice/article/details/79030770" target="_blank" rel="noopener">http://blog.csdn.net/atnice/article/details/79030770</a><br><br>[6] 智能合约的实例，里面包括简单的代币合约、高级代币合约、众筹合约。<br><br>    <a href="https://github.com/idoall/truffle_solidity_contractsExample" target="_blank" rel="noopener">https://github.com/idoall/truffle_solidity_contractsExample</a><br><br>[7] Truffle 4.0、Geth 1.7.2、TestRPC在私有链上搭建智能合约<br><br><a href="https://mshk.top/2017/11/truffle-4-0-geth-1-7-2-testrpc/" target="_blank" rel="noopener">https://mshk.top/2017/11/truffle-4-0-geth-1-7-2-testrpc/</a><br></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://xuwenqi.info/2018/01/27/以太坊学习笔记_4/" data-title="以太坊学习笔记_4 | 徐文起写字的地方" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/01/28/以太坊学习笔记_5/" title="以太坊学习笔记_5">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  以太坊学习笔记_5</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/01/26/以太坊学习笔记_3/"  title="以太坊学习笔记_3">
+ <strong>NEXT:</strong><br/> 
+ <span>以太坊学习笔记_3
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#第四天"><span class="toc-number">1.</span> <span class="toc-text">第四天</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#部署合约的流程"><span class="toc-number">1.1.</span> <span class="toc-text">部署合约的流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单的demo-加法"><span class="toc-number">1.2.</span> <span class="toc-text">简单的demo 加法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装rpctest"><span class="toc-number">1.3.</span> <span class="toc-text">安装rpctest</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#truffle-和-rpstest一起使用"><span class="toc-number">1.4.</span> <span class="toc-text">truffle 和 rpstest一起使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">1.5.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+
+  <div class="rsspart">
+	<a href="" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2018 
+		
+		<a href="http://xuwenqi.info" target="_blank" title="WenqiXu">WenqiXu</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>
