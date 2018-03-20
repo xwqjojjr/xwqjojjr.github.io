@@ -4,13 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>高性能区块链笔记_1 | 徐文起写字的地方</title>
+    <title>以太坊学习笔记_8(区块链浏览器) | 徐文起写字的地方</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="WenqiXu">
     
-    <meta name="description" content="研究背景在现有的网络中，区块链的交易速度十分有限，不仅严重影响区块链的使用体验，也影响了区块链的使用范围。
-目前，影响区块链交易性能包括广播通信、信息加密解、共识机制、交易验证机制4个环节。广播通信：对于特定的应用，可以把在公链中的通信变成联盟链交易验证：        分片处理，每个节点只处理一部">
+    <meta name="description" content="以太坊浏览器区块链浏览器是浏览区块链信息的主要窗口，每一个区块所记载的内容都可以从区块链浏览器上进行查阅。通常数字货币用户会使用区块链浏览器查询记录在区块中的交易信息。每一条区块链都有自己的区块链浏览器，用户不能通过区块链浏览器进行跨链查询。例如比特币区块链的浏览器只能查询比特币区块，以太坊只能查询">
     
     
     
@@ -66,15 +65,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/03/06/高性能区块链笔记_1/" title="高性能区块链笔记_1" itemprop="url">高性能区块链笔记_1</a>
+      <a href="/2018/03/20/以太坊学习笔记_8以太坊浏览器/" title="以太坊学习笔记_8(区块链浏览器)" itemprop="url">以太坊学习笔记_8(区块链浏览器)</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://xuwenqi.info" title="WenqiXu">WenqiXu</a>
     </p>
   <p class="article-time">
-    <time datetime="2018-03-05T16:00:00.000Z" itemprop="datePublished">2018-03-06</time>
-    更新日期:<time datetime="2018-03-06T13:09:10.000Z" itemprop="dateModified">2018-03-06</time>
+    <time datetime="2018-03-19T16:00:00.000Z" itemprop="datePublished">2018-03-20</time>
+    更新日期:<time datetime="2018-03-20T14:50:53.215Z" itemprop="dateModified">2018-03-20</time>
     
   </p>
 </header>
@@ -83,13 +82,12 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#研究背景"><span class="toc-number">1.</span> <span class="toc-text">研究背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区块链面临的挑战"><span class="toc-number">2.</span> <span class="toc-text">区块链面临的挑战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目前的各种解决方案"><span class="toc-number">3.</span> <span class="toc-text">目前的各种解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#以太坊浏览器"><span class="toc-number">1.</span> <span class="toc-text">以太坊浏览器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区块链浏览器"><span class="toc-number">2.</span> <span class="toc-text">区块链浏览器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">3.</span> <span class="toc-text">参考文献</span></a></li></ol>
 		</div>
 		
-		<h2 id="研究背景"><a href="#研究背景" class="headerlink" title="研究背景"></a>研究背景</h2><p>在现有的网络中，区块链的交易速度十分有限，不仅严重影响区块链的使用体验，也影响了区块链的使用范围。<br></p>
-<p>目前，影响区块链交易性能包括广播通信、信息加密解、共识机制、交易验证机制4个环节。<br><br><strong>广播通信</strong>：对于特定的应用，可以把在公链中的通信变成联盟链<br><br><strong>交易验证</strong>：<br><br>        分片处理，每个节点只处理一部分交易，比如一部分账户发起的交易<br><br>        闪电网络和状态通道，保持底层区块链协议不变，尽可能将交易放到链外执行<br><br>        北航链设计了独有的ABC（账户区块链）和TBC（交易区块链），当有新的银行成立或者原有银行需要进行扩展时，可以设立ABC来解决，当交易量较大时，可以增加TBC来增加处理速度。<br></p>
-<h2 id="区块链面临的挑战"><a href="#区块链面临的挑战" class="headerlink" title="区块链面临的挑战"></a>区块链面临的挑战</h2><h2 id="目前的各种解决方案"><a href="#目前的各种解决方案" class="headerlink" title="目前的各种解决方案"></a>目前的各种解决方案</h2><p>1.改变区块链规则引入分叉，会造成复杂的影响<br><br>2.将交易杂凑值代替交易数据可以提升网络处理交易的能力<br><br>3.大区块需要更长的时间写入区块链中，影响网络的共识机制，造成高孤块<br><br>4.根据定量框架分析基于工作量证明的区块链安全性，在区块大小为1MB下，将区块间隔降低至1min不会影响区块链安全性。<br><br>5.对于比特币来说，将每个区块容量从1MB提高到2MB<br><br>6.见证隔离技术（segregated witness）当前比特币交易中，交易数据和签名数据保存在同一数据结构中，见证隔离则将签名数据从交易中分离出来，组成新的结构另行存储<br><br>7.闪电网络方案，讲频繁支付的小额交易利用事先建立的通道离链完成<br></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>[1] 喻辉,张宗洋,刘建伟. 比特币区块链扩容技术研究[J]. 计算机研究与发展, 2017, 54(10): 2390-2403.<br><br>[2] 高志豪. 解决区块链三大问题的利器[J]. 金卡工程, 2016(12):46-48.<br><br>[3] 刘肖飞. 基于动态授权的拜占庭容错共识算法的区块链性能改进研究[D]. 浙江大学, 2017.    <br><br>[4] 郭为民. 基于银行视角的区块链应用挑战与机遇[J]. 金融电子化, 2016(4):9-10.<br><br>[5] 杨辉, 张杰. 传统宽带网络面临挑战区块链技术为其转型升级[J]. 通信世界, 2016(21):48-50.<br><br>[6] 许涛. 区块链技术在教育教学中的应用与挑战[J]. 现代教育技术, 2017, 27(1):108-114.<br></p>
+		<h2 id="以太坊浏览器"><a href="#以太坊浏览器" class="headerlink" title="以太坊浏览器"></a>以太坊浏览器</h2><p>区块链浏览器是浏览区块链信息的主要窗口，每一个区块所记载的内容都可以从区块链浏览器上进行查阅。通常数字货币用户会使用区块链浏览器查询记录在区块中的交易信息。<br><br>每一条区块链都有自己的区块链浏览器，用户不能通过区块链浏览器进行跨链查询。例如比特币区块链的浏览器只能查询比特币区块，以太坊只能查询以太坊，而并不能通过比特币区块链浏览器查询以太坊的区块。<br><br>有些网站为了方便用户查询多条区块链上的内容，会将多条链的区块链浏览器集中在一个网站上，方便用户在多个区块浏览器中自由切换。需要注意的是，能自由切换区块浏览器，并不代表可以将数字资产进行跨链交易。区块链浏览器仅提供区块查询功能。<br><br>不同的区块浏览器展示的内容也不同，通常用户可以查询到区块中包含的交易信息，以及区块的高度、哈希值、发布时间和开采的矿工等等。部分区块链浏览器还会显示全网算力、算力难度以及其他的一些参考内容。<br></p>
+<p>etherechain<br><br><img src="https://github.com/xwqjojjr/MarkdownPhotos/blob/master/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%AD%A6%E4%B9%A0/etherchain.png?raw=true" alt="1"><br><br><br><img src="https://github.com/xwqjojjr/MarkdownPhotos/blob/master/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%AD%A6%E4%B9%A0/3%E6%9C%8820%E6%97%A5etherechain_block.png?raw=true" alt="2"><br><br>tardeblock<br><br><img src="https://github.com/xwqjojjr/MarkdownPhotos/blob/master/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%AD%A6%E4%B9%A0/Tradeblock.png?raw=true" alt="3"></p>
+<h2 id="区块链浏览器"><a href="#区块链浏览器" class="headerlink" title="区块链浏览器"></a>区块链浏览器</h2><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]以太坊区块浏览器汇总- ETH/以太坊 - 巴比特论坛<br><br><a href="http://8btc.com/thread-22401-1-1.html" target="_blank" rel="noopener">http://8btc.com/thread-22401-1-1.html</a><br>[2]<br><a href="https://etherchain.org/" target="_blank" rel="noopener">https://etherchain.org/</a><br>[3]<br><a href="https://tradeblock.com/ethereum/" target="_blank" rel="noopener">https://tradeblock.com/ethereum/</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -99,7 +97,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://xuwenqi.info/2018/03/06/高性能区块链笔记_1/" data-title="高性能区块链笔记_1 | 徐文起写字的地方" data-tsina="" class="share clearfix">
+  <div data-url="http://xuwenqi.info/2018/03/20/以太坊学习笔记_8以太坊浏览器/" data-title="以太坊学习笔记_8(区块链浏览器) | 徐文起写字的地方" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -109,18 +107,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2018/03/07/高性能区块链笔记_2(Zilliqa)/" title="高性能区块链笔记_2Zilliqa学习">
+ <a href="/2018/03/20/以太坊学习笔记_7/" title="以太坊学习笔记_7(获取以太坊全部的块和块内数据)">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  高性能区块链笔记_2Zilliqa学习</span>
+  以太坊学习笔记_7(获取以太坊全部的块和块内数据)</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2018/01/29/以太坊学习笔记_6/"  title="以太坊学习笔记_6">
+<a href="/2018/03/19/区块链猫源码笔记_1/"  title="区块链猫源码分析_1">
  <strong>NEXT:</strong><br/> 
- <span>以太坊学习笔记_6
+ <span>区块链猫源码分析_1
 </span>
 </a>
 </div>
@@ -133,7 +131,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#研究背景"><span class="toc-number">1.</span> <span class="toc-text">研究背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区块链面临的挑战"><span class="toc-number">2.</span> <span class="toc-text">区块链面临的挑战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目前的各种解决方案"><span class="toc-number">3.</span> <span class="toc-text">目前的各种解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#以太坊浏览器"><span class="toc-number">1.</span> <span class="toc-text">以太坊浏览器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区块链浏览器"><span class="toc-number">2.</span> <span class="toc-text">区块链浏览器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">3.</span> <span class="toc-text">参考文献</span></a></li></ol>
   </div>
 
 <div id="asidepart">
